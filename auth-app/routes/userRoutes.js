@@ -48,10 +48,10 @@ UserRouter.post('/login', async (req, res) => {
             bcrypt.compare(password, hash).then(function (result) {
                 console.log(result);
                 if (result) {
-                    res.status(200).json({ message: "logged in Successful" });
+                    res.status(302).json({ message: "logged in Successful" });
                 }
                 else {
-                    res.status(200).json({ message: "Wrong Password Please try again" });
+                    res.status(401).json({ message: "Wrong Password Please try again" });
                 }
             })
         }
