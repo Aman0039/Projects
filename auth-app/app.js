@@ -1,5 +1,6 @@
 const express = require("express");
 const connectToDB = require("./config/mongodb.config");
+const UserRouter = require("./routes/user.routes");
 require("dotenv").config();
 
 
@@ -21,6 +22,7 @@ app.get("/test", (req, res) => {
     }
 });
 
+app.use("/user" , UserRouter)
 
 // handlling unknown routes.
 app.use((req, res) => {
