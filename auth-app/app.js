@@ -1,6 +1,8 @@
 const express = require("express");
-const connectToDB = require("./config/mongodb.config");
-const UserRouter = require("./routes/user.routes");
+const connectToDB = require("./config/mongodbConfig");
+const UserRouter = require("./routes/userRoutes");
+const todoRoutes = require("./routes/todoRoutes");
+
 require("dotenv").config();
 
 
@@ -22,8 +24,13 @@ app.get("/test", (req, res) => {
     }
 });
 
+// Handle User Router
+
 app.use("/user" , UserRouter)
 
+//Handle Todo Router
+
+app.use("/todos" , todoRoutes);
 // handlling unknown routes.
 app.use((req, res) => {
     try {
