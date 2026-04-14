@@ -1,7 +1,8 @@
 const express = require("express");
 const connectToDB = require("./config/mongodbConfig");
 const UserRouter = require("./routes/userRoutes");
-const todoRoutes = require("./routes/todoRoutes");
+const TodoRoutes = require("./routes/todoRoutes");
+const authMiddleware = require("./middlewares/authMiddleware");
 
 require("dotenv").config();
 
@@ -9,6 +10,8 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+
+// DB Connection.
 connectToDB();
 
 app.use(express.json()); // body parser middleware.
@@ -25,12 +28,11 @@ app.get("/test", (req, res) => {
 });
 
 // Handle User Router
-
-app.use("/user" , UserRouter)
+app.use("/user", UserRouter)
 
 //Handle Todo Router
 
-app.use("/todos" , todoRoutes);
+app.use("/todos", authMiddleware, TodoRoutes);
 // handlling unknown routes.
 app.use((req, res) => {
     try {
@@ -42,6 +44,6 @@ app.use((req, res) => {
 })
 
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log(`server started on PORT : http://localhost:${PORT}`);
 })
